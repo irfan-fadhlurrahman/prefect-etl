@@ -1,0 +1,10 @@
+.env
+Pipfile
+Pipfile.lock
+**/data
+**/dataset
+**/__pycache__
+**/.ipynb_checkpoints
+**/.json
+**/.csv
+**/.parquet

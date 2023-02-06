@@ -1,0 +1,60 @@
+###
+### A complete description of a Prefect Deployment for flow 'etl-parent-flow'
+###
+name: GitHub to GCS ETL Pipeline Apr 2019
+description: Run each etl_web_to_gcs flow for specific dataset
+version: ba1019578b73e0aebe7ce5d6bf3fc4e9
+# The work queue that will handle this deployment's runs
+work_queue_name: test
+tags: []
+parameters:
+  color: green
+  year: 2019
+  month_list:
+  - 4
+schedule: null
+infra_overrides: {}
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: etl-parent-flow
+manifest_path: null
+infrastructure:
+  type: process
+  env: {}
+  labels: {}
+  name: null
+  command: null
+  stream_output: true
+  working_dir: null
+  _block_document_id: 7f7a26fb-d089-4a4d-b3c0-da37e4ea00f3
+  _block_document_name: anonymous-b7261407-5f2e-4325-8ea7-6871517f8641
+  _is_anonymous: true
+  block_type_slug: process
+  _block_type_slug: process
+storage: null
+path: /home/irfanfadh43/workflow_orchestration
+entrypoint: flows/parameterized_flow.py:etl_parent_flow
+parameter_openapi_schema:
+  title: Parameters
+  type: object
+  properties:
+    color:
+      title: color
+      position: 0
+      type: string
+    year:
+      title: year
+      position: 1
+      type: integer
+    month_list:
+      title: month_list
+      position: 2
+      type: array
+      items: {}
+  required:
+  - color
+  - year
+  - month_list
+  definitions: null
