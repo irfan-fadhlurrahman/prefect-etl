@@ -31,11 +31,11 @@ def transform(path: Path) -> pd.DataFrame:
 
 
 @task()
-def load(df: pd.DataFrame) -> None:
+def load(df: pd.DataFrame, color: str) -> None:
     """Write DataFrame to BigQuery"""
     gcp_credentials_block = GcpCredentials.load("gcp-bucket")
     df.to_gbq(
-        destination_table="trips_data_all.yellow-taxi",
+        destination_table=f"trips_data_all.{color}-taxi",
         project_id="dtc-de-course-375301",
         credentials=gcp_credentials_block.get_credentials_from_service_account(),
         chunksize=500_000,
@@ -53,7 +53,7 @@ def etl_gcs_to_bq(color: str, year: int, month: int) -> None:
     print(df.info())
     
     # Task to write to BQ
-    load(df)
+    load(df, color)
     
 @flow()
 def etl_parent_flow_bq(color: str, year: int, month_list: list) -> None:
@@ -61,7 +61,7 @@ def etl_parent_flow_bq(color: str, year: int, month_list: list) -> None:
     for month in month_list:
         try:
             etl_gcs_to_bq(color, year, month)
-        except urllib.error.HTTPError:
+        except (urllib.error.HTTPError, FileNotFoundError):
             continue
         
 if __name__ == "__main__":
